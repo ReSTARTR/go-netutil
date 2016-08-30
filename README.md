@@ -29,7 +29,7 @@ Usage
 ```go
 import (
 	"net/http"
-	"github.com/ReSTARTR/go-http-requestutil
+	"github.com/ReSTARTR/go-http-requestutil"
 )
 
 func main() {
