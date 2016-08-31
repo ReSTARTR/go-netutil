@@ -2,62 +2,34 @@ package main
 
 import (
 	"context"
-	_ "crypto/tls"
-	_ "crypto/x509"
 	"flag"
-	"log"
-	"net/http"
-	"net/http/httputil"
-
-	"github.com/ReSTARTR/go-http-requestutil"
+	"fmt"
+	"github.com/ReSTARTR/go-net-dialx"
 	"github.com/tcnksm/go-httptraceutils"
+	"net/http"
 )
 
-var u = flag.String("url", "https://www.google.com/", "URL string")
+var url = flag.String("url", "https://www.google.com/", "")
 
 func main() {
 	flag.Parse()
 
+	req, _ := http.NewRequest("GET", *url, nil)
 	ctx := httptraceutils.WithClientTrace(context.Background())
-
-	// selector := requestutil.DefaultSelector
-	url := *u
-	req, _ := http.NewRequest("GET", url, nil)
-
 	req = req.WithContext(ctx)
 
-	c := requestutil.Client{}
-	res, _ := c.Do(req)
-	// res, _ := requestutil.RequestViaProxy(req)
-	/*
-		req, err := requestutil.NewRequestWithSelector("GET", url, nil, selector)
-		if err != nil {
-			log.Fatal(err)
-		}
-	*/
-
-	b, err := httputil.DumpRequest(req, false)
-	if err != nil {
-		log.Fatal(err)
+	c := http.Client{
+		Transport: &http.Transport{
+			Proxy: nil,
+			Dial:  dialx.DefaultDialer.Dial,
+		},
 	}
-	log.Printf("Header:\n%s", b)
 
-	/*
-		var client *http.Client
-		if req.URL.Scheme == "https" {
-			client = &http.Client{
-				Transport: &http.Transport{
-					TLSClientConfig: &tls.Config{RootCAs: x509.NewCertPool()},
-				},
-			}
-		} else {
-			client = http.DefaultClient
-		}
-
-		res, err := client.Do(req)
+	for i := 0; i < 10; i++ {
+		res, err := c.Do(req)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
 		}
-	*/
-	_ = res
+		_ = res
+	}
 }
