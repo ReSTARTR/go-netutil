@@ -14,7 +14,7 @@ import (
 // TODO: connection pool
 type RRDialer struct {
 	dialer *net.Dialer
-	Sort   func([]net.IP) []net.IP
+	Sort   func([]net.IP)
 }
 
 // DefaultDialer has a dialer that includes the same as
@@ -45,12 +45,13 @@ func (d *RRDialer) DialContext(ctx context.Context, network, addr string) (net.C
 		return nil, err
 	}
 
-	sort := d.Sort
-	if sort == nil {
-		sort = RandomSort
+	if d.Sort == nil {
+		RandomSort(addrs)
+	} else {
+		d.Sort(addrs)
 	}
 
-	for _, addr := range sort(addrs) {
+	for _, addr := range addrs {
 		ip4 := addr.To4()
 		if ip4 == nil {
 			continue

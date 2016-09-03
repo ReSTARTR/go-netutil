@@ -8,9 +8,8 @@ import (
 )
 
 // RandomSort sorts ips at random.
-func RandomSort(ips []net.IP) []net.IP {
+func RandomSort(ips []net.IP) {
 	sort.Sort(atRandom(ips))
-	return ips
 }
 
 type atRandom []net.IP
