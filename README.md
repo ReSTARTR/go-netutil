@@ -1,6 +1,8 @@
 go-netutil
 ====
 
+[![CircleCI](https://circleci.com/gh/ReSTARTR/go-netutil.svg?style=svg)](https://circleci.com/gh/ReSTARTR/go-netutil)
+
 `netutil.RRDialer` has the same interface of `net.Dial`.
 With this package, You can request to a specific IP address with priority as you like.
 
