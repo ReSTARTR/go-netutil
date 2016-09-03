@@ -1,4 +1,4 @@
-package dialx
+package netutil
 
 import (
 	"math/rand"

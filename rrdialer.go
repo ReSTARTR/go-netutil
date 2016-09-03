@@ -1,4 +1,4 @@
-package dialx
+package netutil
 
 import (
 	"fmt"
@@ -12,14 +12,14 @@ import (
 // Dialer contains options for connection to an address with a specific IP.
 //
 // TODO: connection pool
-type Dialer struct {
+type RRDialer struct {
 	dialer *net.Dialer
 	Sort   func([]net.IP) []net.IP
 }
 
 // DefaultDialer has a dialer that includes the same as
 // DefaultTransport use
-var DefaultDialer = &Dialer{
+var DefaultRRDialer = &RRDialer{
 	dialer: &net.Dialer{
 		Timeout:   30 * time.Second,
 		KeepAlive: 30 * time.Second,
@@ -28,13 +28,13 @@ var DefaultDialer = &Dialer{
 
 // Dial connects to the address with an specific IP
 // on the named network.
-func (d *Dialer) Dial(network, address string) (net.Conn, error) {
+func (d *RRDialer) Dial(network, address string) (net.Conn, error) {
 	return d.DialContext(context.Background(), network, address)
 }
 
 // DialContext connects to the address with an specific IP
 // on the named network using the provided context.
-func (d *Dialer) DialContext(ctx context.Context, network, addr string) (net.Conn, error) {
+func (d *RRDialer) DialContext(ctx context.Context, network, addr string) (net.Conn, error) {
 	host, port, err := net.SplitHostPort(addr)
 	if err != nil {
 		return nil, err

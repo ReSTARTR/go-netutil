@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/ReSTARTR/go-net-dialx"
+	"github.com/ReSTARTR/go-netutil"
 	"github.com/tcnksm/go-httptraceutils"
 	"net/http"
 )
@@ -21,7 +21,7 @@ func main() {
 	c := http.Client{
 		Transport: &http.Transport{
 			Proxy: nil,
-			Dial:  dialx.DefaultDialer.Dial,
+			Dial:  netutil.DefaultRRDialer.Dial,
 		},
 	}
 
