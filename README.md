@@ -24,6 +24,8 @@ go get github.com/ReSTARTR/go-netutil
 Usage
 ----
 
+### netutil.RRDialer
+
 `netutil.DefaultRRDialer` uses `netutil.DefaultSort` for sorting IP addresses.
 `netutil.DefaultSort` sorts IPs randomly.
 
