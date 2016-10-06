@@ -9,7 +9,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-// Dialer contains options for connection to an address with a specific IP.
+// RRDialer contains options for connection to an address with a specific IP.
 //
 // TODO: connection pool
 type RRDialer struct {
@@ -17,7 +17,7 @@ type RRDialer struct {
 	Sort   func([]net.IP)
 }
 
-// DefaultDialer has a dialer that includes the same as
+// DefaultRRDialer has a dialer that includes the same as
 // DefaultTransport use
 var DefaultRRDialer = &RRDialer{
 	dialer: &net.Dialer{

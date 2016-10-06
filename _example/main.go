@@ -4,9 +4,10 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"net/http"
+
 	"github.com/ReSTARTR/go-netutil"
 	"github.com/tcnksm/go-httptraceutils"
-	"net/http"
 )
 
 var url = flag.String("url", "https://www.google.com/", "")
